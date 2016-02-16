@@ -38,7 +38,7 @@ public class ComPort {
             SerialPort serialPort = (SerialPort) portIdentifier.open("RS232Example", 2000);  
               
             // setup connection parameters  
-            serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            serialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
    
             // setup serial port writer  
             CommPortSender.setWriterStream(serialPort.getOutputStream());  
@@ -48,44 +48,10 @@ public class ComPort {
         }
     }
     
-    public void write(String data){
-        CommPortSender.send(new ProtocolImpl().getMessage(data));  
+    public void write(byte [] data){
+        CommPortSender.send(data);  
     }
     
-    public void read(ArduinoSerialUI window){
-        this.timer = new Timer(1000, new ActionListener() {
-            
-            private StringBuffer s = new StringBuffer("");
-            
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                try {
-                    int b;
-                    
-                    // if stream is not bound in.read() method returns -1  
-                    while ((b = in.read()) != -1) {
-                        if ((char)b!='\n') {
-                            s.append((char)b);
-                        } else {
-                            window.result.setText(s.toString());
-                            System.out.println(s.toString()); 
-                            s = new StringBuffer("");
-                        }
-                    }
-                    // wait 10ms when stream is broken and check again  
-                    sleep(10);
-                    
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                
-            }
-        });
-        this.timer.start();
-        
-    }
-    
+
+
 }

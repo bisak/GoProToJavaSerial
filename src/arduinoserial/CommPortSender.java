@@ -14,9 +14,7 @@ public class CommPortSender {
     
     public static void send(byte[] bytes) {  
         try {  
-            System.out.println("SENDING: " + new String(bytes, 0, bytes.length));  
-              
-            // sending through serial port is simply writing into OutputStream  
+            System.out.println("SENDING: ");   
             out.write(bytes);  
             out.flush();  
         } catch (IOException e) {  

@@ -1,6 +1,6 @@
 package arduinoserial;
 
-import gnu.io.CommPortIdentifier; 
+import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -33,67 +33,82 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonOn = new javax.swing.JButton();
-        buttonOff = new javax.swing.JButton();
-        result = new javax.swing.JLabel();
+        jSlider1 = new javax.swing.JSlider();
+        jSlider2 = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        buttonOn.setText("ON");
-        buttonOn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOnActionPerformed(evt);
+        jSlider1.setMaximum(1180);
+        jSlider1.setMinimum(1000);
+        jSlider1.setOrientation(javax.swing.JSlider.VERTICAL);
+        jSlider1.setValue(1090);
+        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider1StateChanged(evt);
+            }
+        });
+        jSlider1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSlider1MouseReleased(evt);
             }
         });
 
-        buttonOff.setText("OFF");
-        buttonOff.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOffActionPerformed(evt);
+        jSlider2.setMaximum(2180);
+        jSlider2.setMinimum(2000);
+        jSlider2.setValue(2090);
+        jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider2StateChanged(evt);
             }
         });
-
-        result.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        result.setText("NONE");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(buttonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
-                .addComponent(buttonOff, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(result)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(result)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonOn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonOff, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(69, 69, 69))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jSlider2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonOnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOnActionPerformed
-        this.mComPort.write("1");
-    }//GEN-LAST:event_buttonOnActionPerformed
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+        int i = jSlider1.getValue();
+        byte data[] = new byte[2];
+        data[1] = (byte) (i / 256);
+        data[0] = (byte) (i % 256);
+        this.mComPort.write(data);
+    }//GEN-LAST:event_jSlider1StateChanged
 
-    private void buttonOffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOffActionPerformed
-        this.mComPort.write("0");
-    }//GEN-LAST:event_buttonOffActionPerformed
-    
+    private void jSlider1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseReleased
+
+    }//GEN-LAST:event_jSlider1MouseReleased
+
+    private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
+        int i = jSlider2.getValue();
+        byte data[] = new byte[2];
+        data[1] = (byte) (i / 256);
+        data[0] = (byte) (i % 256);
+        this.mComPort.write(data);
+    }//GEN-LAST:event_jSlider2StateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -124,10 +139,10 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
                 ArduinoSerialUI window = new ArduinoSerialUI();
-                
-                window.mComPort = new ComPort("COM5");
+
+                window.mComPort = new ComPort("COM11");
                 try {
                     window.mComPort.connect();
                 } catch (NoSuchPortException ex) {
@@ -137,23 +152,19 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
                 } catch (UnsupportedCommOperationException | IOException ex) {
                     System.out.println("Something happend :)");
                 }
-                
+
                 window.setVisible(true);
-                
-                window.mComPort.read(window);
-                
+
             }
         });
-        
+
         // connects to the port which name (e.g. COM1) is in the first argument  
-        
     }
 
     private ComPort mComPort;
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonOff;
-    private javax.swing.JButton buttonOn;
-    public javax.swing.JLabel result;
+    private javax.swing.JSlider jSlider1;
+    private javax.swing.JSlider jSlider2;
     // End of variables declaration//GEN-END:variables
 }
