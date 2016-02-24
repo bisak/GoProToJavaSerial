@@ -51,6 +51,10 @@ public class ComPort {
     public void write(byte [] data){
         CommPortSender.send(data);  
     }
+
+    void write(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 
 
