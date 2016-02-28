@@ -258,7 +258,7 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
 
                 ArduinoSerialUI window = new ArduinoSerialUI();
 
-                window.mComPort = new ComPort("COM16");
+                window.mComPort = new ComPort("COM31");
                 try {
                     window.mComPort.connect();
                 } catch (NoSuchPortException ex) {
