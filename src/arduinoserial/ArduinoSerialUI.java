@@ -11,7 +11,8 @@ import javax.swing.Timer;
 public class ArduinoSerialUI extends javax.swing.JFrame {
 
     public Timer timer;
-
+    public static String comport = "COM7";
+    
     public ArduinoSerialUI() {
         initComponents();
     }
@@ -25,10 +26,12 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
         rightBtn = new javax.swing.JButton();
         leftBtn = new javax.swing.JButton();
         speedSlider = new javax.swing.JSlider();
+        textComport = new javax.swing.JTextField();
+        btnCon = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        upBtn.setText("UP");
+        upBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arduinoserial/up.png"))); // NOI18N
         upBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 upBtnMousePressed(evt);
@@ -37,18 +40,8 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
                 upBtnMouseReleased(evt);
             }
         });
-        upBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                upBtnActionPerformed(evt);
-            }
-        });
-        upBtn.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                upBtnKeyPressed(evt);
-            }
-        });
 
-        downBtn.setText("DOWN");
+        downBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arduinoserial/down.png"))); // NOI18N
         downBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 downBtnMousePressed(evt);
@@ -57,13 +50,8 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
                 downBtnMouseReleased(evt);
             }
         });
-        downBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                downBtnActionPerformed(evt);
-            }
-        });
 
-        rightBtn.setText("RIGHT");
+        rightBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arduinoserial/right.png"))); // NOI18N
         rightBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 rightBtnMousePressed(evt);
@@ -72,24 +60,15 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
                 rightBtnMouseReleased(evt);
             }
         });
-        rightBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rightBtnActionPerformed(evt);
-            }
-        });
 
-        leftBtn.setText("LEFT");
+        leftBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/arduinoserial/left.png"))); // NOI18N
+        leftBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         leftBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 leftBtnMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 leftBtnMouseReleased(evt);
-            }
-        });
-        leftBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                leftBtnActionPerformed(evt);
             }
         });
 
@@ -104,66 +83,65 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
             }
         });
 
+        btnCon.setText("Connect");
+        btnCon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnConMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addContainerGap(131, Short.MAX_VALUE)
+                        .addComponent(leftBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(129, 129, 129)
+                        .addComponent(rightBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(downBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(upBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(leftBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                        .addComponent(rightBtn)
-                        .addGap(35, 35, 35)))
+                            .addComponent(textComport)
+                            .addComponent(btnCon, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(upBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(downBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(147, 147, 147)))
                 .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(speedSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(upBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(rightBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(upBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(rightBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(leftBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(downBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(60, 60, 60))
+                                .addGap(9, 9, 9)
+                                .addComponent(textComport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCon)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(leftBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(downBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(speedSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void leftBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftBtnActionPerformed
-
-    }//GEN-LAST:event_leftBtnActionPerformed
-
-    private void upBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upBtnActionPerformed
-
-    }//GEN-LAST:event_upBtnActionPerformed
-
-    private void downBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downBtnActionPerformed
-
-    }//GEN-LAST:event_downBtnActionPerformed
-
-    private void rightBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightBtnActionPerformed
-
-    }//GEN-LAST:event_rightBtnActionPerformed
 
 
     private void upBtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_upBtnMousePressed
@@ -228,22 +206,28 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
         });
         this.timer.start();
     }//GEN-LAST:event_leftBtnMousePressed
-
+    //set default speed
     int speed = 25;
     private void speedSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_speedSliderStateChanged
+        //get slider's value
         speed = speedSlider.getValue();
     }//GEN-LAST:event_speedSliderStateChanged
 
-    private void upBtnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_upBtnKeyPressed
-        this.timer = new Timer(speed, new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                byte data[] = new byte[1];
-                data[0] = (byte) (20);
-                mComPort.write(data);
-            }
-        });
-        this.timer.start();
-    }//GEN-LAST:event_upBtnKeyPressed
+    private void btnConMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConMouseClicked
+        ArduinoSerialUI.comport = this.textComport.getText();
+        this.mComPort = new ComPort(ArduinoSerialUI.comport);
+        
+        try {
+            this.mComPort.connect();
+        } catch (NoSuchPortException ex) {
+            System.out.println(this.mComPort.portName + " not found!");
+        } catch (PortInUseException ex) {
+            System.out.println(this.mComPort.portName + " in use!");
+        } catch (UnsupportedCommOperationException | IOException ex) {
+            System.out.println("Something happend :)");
+        }
+
+    }//GEN-LAST:event_btnConMouseClicked
 
     /**
      * @param args the command line arguments
@@ -285,18 +269,7 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
             public void run() {
 
                 ArduinoSerialUI window = new ArduinoSerialUI();
-
-                window.mComPort = new ComPort("COM63");
-                try {
-                    window.mComPort.connect();
-                } catch (NoSuchPortException ex) {
-                    System.out.println(window.mComPort.portName + " not found!");
-                } catch (PortInUseException ex) {
-                    System.out.println(window.mComPort.portName + " in use!");
-                } catch (UnsupportedCommOperationException | IOException ex) {
-                    System.out.println("Something happend :)");
-                }
-
+                
                 window.setVisible(true);
 
             }
@@ -306,10 +279,12 @@ public class ArduinoSerialUI extends javax.swing.JFrame {
     public ComPort mComPort;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCon;
     private javax.swing.JButton downBtn;
     private javax.swing.JButton leftBtn;
     private javax.swing.JButton rightBtn;
     private javax.swing.JSlider speedSlider;
+    private javax.swing.JTextField textComport;
     private javax.swing.JButton upBtn;
     // End of variables declaration//GEN-END:variables
 }
